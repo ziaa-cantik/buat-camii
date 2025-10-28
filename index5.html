@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mau Baikan Gak?</title>
+<style>
+  /* ==== Tema Nailong (soft dreamy animasi) ==== */
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top, #f5e1ff, #a8c0ff);
+    overflow: hidden;
+  }
+
+  .fade {
+    animation: fadeIn 1.5s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  /* ==== LOGIN ==== */
+  #loginPage {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.6);
+  }
+
+  #loginBox {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+    display: inline-block;
+  }
+
+  input {
+    display: block;
+    margin: 15px auto;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    outline: none;
+    width: 220px;
+  }
+
+  button {
+    background: linear-gradient(135deg, #b993d6, #8ca6db);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255,255,255,0.8);
+  }
+
+  /* ==== PERTANYAAN ==== */
+  #questionPage {
+    display: none;
+    color: white;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+  }
+
+  .btns {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  #yesBtn {
+    background: linear-gradient(135deg, #f78ca0, #f9748f, #fd868c);
+  }
+
+  #noBtn {
+    background: #fff;
+    color: #f9748f;
+  }
+
+  /* ==== PESAN ROMANTIS ==== */
+  #messagePage {
+    display: none;
+    color: white;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    max-width: 80%;
+  }
+
+  #messagePage p {
+    font-size: 1.2em;
+    line-height: 1.7em;
+    animation: textFade 2s ease;
+  }
+
+  @keyframes textFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ==== Animasi background lembut ==== */
+  .bubble {
+    position: absolute;
+    bottom: -100px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    animation: floatUp 10s infinite ease-in;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-110vh) scale(0.6); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <div id="loginPage" class="center fade">
+    <div id="loginBox">
+      <h2>Masuk dulu yah 💞</h2>
+      <input type="text" id="nama" placeholder="Nama kamu">
+      <input type="text" id="tanggal" placeholder="Tanggal jadian">
+      <button id="loginBtn">Masuk</button>
+      <p id="errorMsg" style="color: #ffdce5; margin-top: 10px;"></p>
+    </div>
+  </div>
+
+  <!-- QUESTION PAGE -->
+  <div id="questionPage" class="center fade">
+    <h1>Mau baikan gak? 💕</h1>
+    <div class="btns">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+  </div>
+
+  <!-- MESSAGE PAGE -->
+  <div id="messagePage" class="center fade">
+    <h2>💗 Untuk Camii 💗</h2>
+    <p>
+      Halloww camii, maaf yah kalau saya banyak salahnya ke kamu,
+      saya mau kita baikan, jujur saya berusaha membuat website ini
+      sebagus mungkin dan seeffort mungkin, karena hanya ini yang bisa saya buat.
+      Saya sempatkan diriku di tengah-tengah kegiatanku untuk buat website ini,
+      jadi maaf yah kalau tampilannya kurang baguss, hehe.
+      Semoga ini cukup untuk memperbaiki hubungan kita yahh sayanggg 💞
+    </p>
+  </div>
+
+<script>
+  const loginBtn = document.getElementById('loginBtn');
+  const namaInput = document.getElementById('nama');
+  const tanggalInput = document.getElementById('tanggal');
+  const errorMsg = document.getElementById('errorMsg');
+  const loginPage = document.getElementById('loginPage');
+  const questionPage = document.getElementById('questionPage');
+  const messagePage = document.getElementById('messagePage');
+
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+
+  // Animasi background lembut
+  function createBubble() {
+    const bubble = document.createElement('div');
+    const size = Math.random() * 40 + 10;
+    bubble.classList.add('bubble');
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+    bubble.style.left = Math.random() * window.innerWidth + 'px';
+    bubble.style.animationDuration = (5 + Math.random() * 5) + 's';
+    document.body.appendChild(bubble);
+    setTimeout(() => bubble.remove(), 10000);
+  }
+  setInterval(createBubble, 500);
+
+  // Login
+  loginBtn.addEventListener('click', () => {
+    const nama = namaInput.value.trim().toLowerCase();
+    const tanggal = tanggalInput.value.trim().toLowerCase();
+    if (nama === "faisal" && tanggal === "20 maret 2023") {
+      loginPage.style.display = "none";
+      questionPage.style.display = "block";
+    } else {
+      errorMsg.textContent = "Nama atau tanggalnya salah 🥺";
+    }
+  });
+
+  // Tombol No lari
+  noBtn.addEventListener('mouseover', () => {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  });
+
+  // Tombol Yes klik
+  yesBtn.addEventListener('click', () => {
+    questionPage.style.display = "none";
+    messagePage.style.display = "block";
+  });
+</script>
+
+</body>
+</html>
